@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Button, Container } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import { News } from "../interfaces/news";
 
 const Details = () => {
   const [news, setNews] = useState<News>();
   const params = useParams();
   const id = params.id;
-  const data: string = new Date(news?.published_at);
+  const data = news && new Date(news?.published_at).toDateString();
+
   const fetchArticles = async () => {
     try {
       const resp = await fetch(
@@ -30,17 +31,22 @@ const Details = () => {
   return (
     <Container>
       <h1>{news?.title}</h1>
-      <img
-        src={news?.image_url}
-        alt={news?.title}
-        style={{ height: "20rem" }}
-      />
-      <a href={news?.url} className="btn btn-info">
-        Vai alla fonte
-      </a>
+      <div className="d-flex justify-content-between">
+        <Link to="/">
+          <Button>torna alla home</Button>
+        </Link>
+        <img
+          src={news?.image_url}
+          alt={news?.title}
+          style={{ height: "20rem", marginInline: "auto" }}
+        />
+        <a href={news?.url}>
+          <Button>Vai alla fonte</Button>
+        </a>
+      </div>
       <p>{news?.summary}</p>
       <p>info prese da: {news?.news_site}</p>
-      <p></p>
+      <p>{data}</p>
     </Container>
   );
 };

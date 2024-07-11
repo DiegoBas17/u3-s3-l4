@@ -25,7 +25,7 @@ const Home = () => {
     fetchArticles();
   }, []);
   return (
-    <Container>
+    <Container className="mt-5">
       <Row className="g-3">
         {objArticles?.results.map((article, index) => (
           <ArticlesHome key={index} article={article} />
